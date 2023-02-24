@@ -22,20 +22,21 @@ var volumeElms = ['volume', 'barEmpty', 'barFull', 'sliderBtn'];
 //const collection = document.getElementsByClassName("sliderBtn");
 
 
-elms.forEach(function(elm) {
-  window[elm] = document.getElementById(elm);
-  //window[elm + "A"] = [];
+volumeElms.forEach(function(elm) {
+  //window[elm] = document.getElementById(elm);
+  window[elm + "s"] = [];
 
-  let N=2, i=0, a=Array(N);
+  let N=6, i=0, a=Array(N);
 
-  while(i<N) a[i++]=i;
+  while(i<N) a[i]=i++;
 
-  a.forEach(function(i) {
-    window[elm + i] = document.getElementById(elm + i);
-    //window[elm + "A"].push(document.getElementById(elm + i));
+  a.forEach(function(j) {
+    window[elm + j] = document.getElementById(elm + j);
+    window[elm + "s"].push(document.getElementById(elm + j));
   });
 
 });
+
 
 /**
  * Player class containing the state of our playlist and where we are in it.
@@ -47,8 +48,8 @@ var Player = function(playlist, title) {
   this.index = 0;
   this.length = playlist.length;
 
-  this.volumePercents = new Array(playlist.length).fill(barFull.style.width);
-  this.volumeSliderButtonLocs = new Array(playlist.length).fill(sliderBtn.style.left);
+  //this.volumePercents = new Array(playlist.length).fill(barFull.style.width);
+  //this.volumeSliderButtonLocs = new Array(playlist.length).fill(sliderBtn.style.left);
     
   // Display the title of the first track.
   track.innerHTML = title;
@@ -163,7 +164,7 @@ Player.prototype = {
     sound.play();
 
     // Update the track display.
-    track.innerHTML = (index + 1) + '. ' + data.title;
+    //track.innerHTML = (index + 1) + '. ' + data.title;
 
     // Show the pause button.
     if (sound.state() === 'loaded') {
@@ -244,12 +245,29 @@ Player.prototype = {
     // Reset progress.
     //progress.style.width = '0%';
 
-    barFull.style.width = self.volumePercents[index];
-    sliderBtn.style.left = self.volumeSliderButtonLocs[index];
+    //barFull.style.width = self.volumePercents[index];
+    //sliderBtn.style.left = self.volumeSliderButtonLocs[index];
 
     // Play the new track.
     self.play(index);
   },
+
+  volumeTrackAtIndex(val, index) {
+    var self = this;
+    var sound = self.playlist[index].howl;
+
+    sound.volume(val);
+
+    var barWidth = (val * 90) / 100;
+    barFulls[index].style.width = (barWidth * 100) + '%';
+    sliderBtns[index].style.left = (window.innerWidth * barWidth + window.innerWidth * 0.05 - 25) + 'px';
+
+    //self.volumePercents[index] = barFulls[index].style.width;
+    //self.volumeSliderButtonLocs[index] = sliderBtns[index].style.left;
+
+
+  },
+
 
   volumeTrack: function(val) {
     var self = this;
@@ -289,7 +307,7 @@ Player.prototype = {
   seeker: function(per) {
     var self = this;
 
-    for (var i = 1; i < self.playlist.length; i++) {
+    for (var i = 0; i < self.playlist.length; i++) {
       // Get the Howl we want to manipulate.
       var sound = self.playlist[i].howl;
 
@@ -355,26 +373,25 @@ Player.prototype = {
    */
   toggleVolume: function() {
     var self = this;
-    var display = (volume.style.display === 'block') ? 'none' : 'block';
+    //var display = (volume.style.display === 'block') ? 'none' : 'block';
 
     var displays = [];
-    //TODO 2
-    for (var i = 0; i < 2; i++) {
+    
+    for (var i = 0; i < self.length; i++) {
       var d = (window["volume" + i].style.display === 'block') ? 'none' : 'block';
       displays.push(d);
     }
 
-    // TODO 2
     setTimeout(function() {
-      volume.style.display = display;
-      for (var i = 0; i < 2; i++) {
+      //volume.style.display = display;
+      for (var i = 0; i < self.length; i++) {
         window["volume" + i].style.display = displays[i];
       }
-    }, (display === 'block') ? 0 : 500);
+    }, (displays[0] === 'block') ? 0 : 500);
 
-    volume.className = (display === 'block') ? 'volumey fadein' : 'volumey fadeout';
+    //volume.className = (display === 'block') ? 'volumey fadein' : 'volumey fadeout';
 
-    for (var i = 0; i < 2; i++) {
+    for (var i = 0; i < self.length; i++) {
       window["volume" + i].className  = (displays[i] === 'block') ? 'volumey fadein' : 'volumey fadeout';
     }
 
@@ -436,30 +453,77 @@ playBtn.addEventListener('click', function() {
 pauseBtn.addEventListener('click', function() {
   player.pauseAll();
 });
-prevBtn.addEventListener('click', function() {
-  player.skip('prev');
-});
-nextBtn.addEventListener('click', function() {
-  player.skip('next');
-});
+//prevBtn.addEventListener('click', function() {
+//  player.skip('prev');
+//});
+//nextBtn.addEventListener('click', function() {
+//  player.skip('next');
+//});
 waveform.addEventListener('click', function(event) {
   player.seeker(event.clientX / window.innerWidth);
 });
-playlistBtn.addEventListener('click', function() {
-  player.togglePlaylist();
-});
-playlist.addEventListener('click', function() {
-  player.togglePlaylist();
-});
+//playlistBtn.addEventListener('click', function() {
+//  player.togglePlaylist();
+//});
+//playlist.addEventListener('click', function() {
+//  player.togglePlaylist();
+//});
 volumeBtn.addEventListener('click', function() {
   player.toggleVolume();
 });
-volume.addEventListener('click', function() {
-  player.toggleVolume();
-});
+//volume.addEventListener('click', function() {
+//  player.toggleVolume();
+//});
+
+
+for (var i = 0; i < 6; i++) {
+  barEmptys[i].addEventListener('click', function(event) {
+    var per = event.layerX / parseFloat(barEmptys[i].scrollWidth);
+    player.volumeTrackAtIndex(per, i);
+  });
+
+  sliderBtns[i].addEventListener('mousedown', function() {
+    window.sliderDown = true;
+  });
+
+  sliderBtns[i].addEventListener('touchstart', function() {
+    window.sliderDown = true;
+  });
+
+  volumes[i].addEventListener('mouseup', function() {
+    window.sliderDown = false;
+  });
+
+  volumes[i].addEventListener('touchend', function() {
+    window.sliderDown = false;
+  });
+
+
+}
+
+
+var moves = function(event, index) {
+  if (window.sliderDown) {
+    var x = event.clientX || event.touches[0].clientX;
+    var startX = window.innerWidth * 0.05;
+    var layerX = x - startX;
+    var per = Math.min(1, Math.max(0, layerX / parseFloat(barEmptys[index].scrollWidth)));
+    player.volumeTrackAtIndex(per, index);
+  }
+};
+
+for (let i = 0; i < 6; i++) {
+  console.log("mover " + i);
+  var m = function(event) {moves(event, i)};
+  volumes[i].addEventListener('mousemove', m);
+  volumes[i].addEventListener('touchmove', m);
+}
+
+
+
 
 // Setup the event listeners to enable dragging of volume slider.
-barEmpty.addEventListener('click', function(event) {
+/*barEmpty.addEventListener('click', function(event) {
   var per = event.layerX / parseFloat(barEmpty.scrollWidth);
   player.volumeTrack(per);
 });
@@ -474,9 +538,9 @@ volume.addEventListener('mouseup', function() {
 });
 volume.addEventListener('touchend', function() {
   window.sliderDown = false;
-});
+});*/
 
-var move = function(event) {
+/*var move = function(event) {
   if (window.sliderDown) {
     var x = event.clientX || event.touches[0].clientX;
     var startX = window.innerWidth * 0.05;
@@ -484,10 +548,10 @@ var move = function(event) {
     var per = Math.min(1, Math.max(0, layerX / parseFloat(barEmpty.scrollWidth)));
     player.volumeTrack(per);
   }
-};
+};*/
 
-volume.addEventListener('mousemove', move);
-volume.addEventListener('touchmove', move);
+//volume.addEventListener('mousemove', move);
+//volume.addEventListener('touchmove', move);
 
 // Setup the "waveform" animation.
 var wave = new SiriWave({
@@ -521,7 +585,7 @@ var resize = function() {
   if (sound) {
     var vol = sound.volume();
     var barWidth = (vol * 0.9);
-    sliderBtn.style.left = (window.innerWidth * barWidth + window.innerWidth * 0.05 - 25) + 'px';
+    sliderBtns[0].style.left = (window.innerWidth * barWidth + window.innerWidth * 0.05 - 25) + 'px';
   }
 };
 window.addEventListener('resize', resize);
