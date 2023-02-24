@@ -73,13 +73,14 @@ Player.prototype = {
    * **/
   playAll: function() {
     var self = this;
-    //self.playlist.forEach(function(song, index) {
-    //  self.play(index);
-    //});
+    self.playlist.forEach(function(song, index) {
+      console.log("I = " + index);
+      self.play(index);
+    });
 
-    for (var i of Array.from(new Array(self.playlist.length), (x, i) => self.playlist.length - i - 1)) {
-      self.play(i);
-    }
+    //for (var i of Array.from(new Array(self.playlist.length), (x, i) => self.playlist.length - i - 1)) {
+    //  self.play(i);
+    //}
 
   },
 
@@ -111,6 +112,8 @@ Player.prototype = {
     index = typeof index === 'number' ? index : self.index;
     var data = self.playlist[index];
 
+    let trackIdx = index;
+
     // If we already loaded this track, use the current one.
     // Otherwise, setup and load a new Howl.
     if (data.howl) {
@@ -141,7 +144,17 @@ Player.prototype = {
           // Stop the wave animation.
           wave.container.style.display = 'none';
           bar.style.display = 'block';
-          self.skip('next');
+          
+          // While there is only one song, can simply replay same song instead of skipping.
+          self.play(trackIdx);
+          
+          //TODO
+          //self.skip("next");
+
+          // Shows play button when song ends.
+          //playBtn.style.display = 'block';
+          //pauseBtn.style.display = 'none';
+          
         },
         onpause: function() {
           // Stop the wave animation.
@@ -185,7 +198,7 @@ Player.prototype = {
     // Get the Howl we want to manipulate.
     var sound = self.playlist[index].howl;
 
-    // Puase the sound.
+    // Pause the sound.
     sound.pause();
   },
 
@@ -239,7 +252,7 @@ Player.prototype = {
 
     // Stop the current track.
     if (self.playlist[self.index].howl) {
-      //self.playlist[self.index].howl.stop();
+      self.playlist[self.index].howl.stop();
     }
 
     // Reset progress.
