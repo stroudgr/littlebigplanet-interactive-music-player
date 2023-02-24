@@ -9,9 +9,32 @@
  */
 
 // Cache references to DOM elements.
-var elms = ['track', 'timer', 'duration', 'playBtn', 'pauseBtn', 'prevBtn', 'nextBtn', 'playlistBtn', 'volumeBtn', 'progress', 'bar', 'wave', 'loading', 'playlist', 'list', 'volume', 'barEmpty', 'barFull', 'sliderBtn'];
+var elms = ['track', 'timer', 'duration', 'playBtn', 'pauseBtn', 'prevBtn', 'nextBtn', 'playlistBtn', 'volumeBtn', 'progress', 'bar', 'wave', 'loading', 'playlist', 'list'];
 elms.forEach(function(elm) {
   window[elm] = document.getElementById(elm);
+});
+
+var volumeElms = ['volume', 'barEmpty', 'barFull', 'sliderBtn'];
+
+//const collection = document.getElementsByClassName("volume");
+//const collection = document.getElementsByClassName("barFull");
+//const collection = document.getElementsByClassName("barEmpty");
+//const collection = document.getElementsByClassName("sliderBtn");
+
+
+elms.forEach(function(elm) {
+  window[elm] = document.getElementById(elm);
+  //window[elm + "A"] = [];
+
+  let N=2, i=0, a=Array(N);
+
+  while(i<N) a[i++]=i;
+
+  a.forEach(function(i) {
+    window[elm + i] = document.getElementById(elm + i);
+    //window[elm + "A"].push(document.getElementById(elm + i));
+  });
+
 });
 
 /**
@@ -334,10 +357,27 @@ Player.prototype = {
     var self = this;
     var display = (volume.style.display === 'block') ? 'none' : 'block';
 
+    var displays = [];
+    //TODO 2
+    for (var i = 0; i < 2; i++) {
+      var d = (window["volume" + i].style.display === 'block') ? 'none' : 'block';
+      displays.push(d);
+    }
+
+    // TODO 2
     setTimeout(function() {
       volume.style.display = display;
+      for (var i = 0; i < 2; i++) {
+        window["volume" + i].style.display = displays[i];
+      }
     }, (display === 'block') ? 0 : 500);
-    volume.className = (display === 'block') ? 'fadein' : 'fadeout';
+
+    volume.className = (display === 'block') ? 'volumey fadein' : 'volumey fadeout';
+
+    for (var i = 0; i < 2; i++) {
+      window["volume" + i].className  = (displays[i] === 'block') ? 'volumey fadein' : 'volumey fadeout';
+    }
+
   },
 
   /**
