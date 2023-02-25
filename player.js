@@ -448,27 +448,27 @@ var player = new Player([
   },
   {
     title: 'Drums & Bass', //'80s Vibe',
-    file: 'https://static.wikia.nocookie.net/littlebigplanet/images/a/af/Savannah_2._Drums_%26_Bass.mp3/revision/latest?cb=20220724193059',//'80s_vibe',
+    file: 'https://static.wikia.nocookie.net/littlebigplanet/images/a/af/Savannah_2._Drums_%26_Bass.mp3',//'80s_vibe',
     howl: null
   },
   {
     title: 'Accompinament A', //'Running Out',
-    file: 'https://static.wikia.nocookie.net/littlebigplanet/images/3/30/Savannah_3._Accompaniment_A.mp3/revision/latest?cb=20220724193112', //'running_out',
+    file: 'https://static.wikia.nocookie.net/littlebigplanet/images/3/30/Savannah_3._Accompaniment_A.mp3', //'running_out',
     howl: null
   },
   {
     title: 'Accompinament B',
-    file: 'https://static.wikia.nocookie.net/littlebigplanet/images/7/70/Savannah_4._Accompinament_B.mp3/revision/latest?cb=20220724193128', 
+    file: 'https://static.wikia.nocookie.net/littlebigplanet/images/7/70/Savannah_4._Accompinament_B.mp3', 
     howl: null
   },
   {
     title: 'Accompinament C',
-    file: 'https://static.wikia.nocookie.net/littlebigplanet/images/b/b8/Savannah_5._Accompinament_C.mp3/revision/latest?cb=20220724193139', 
+    file: 'https://static.wikia.nocookie.net/littlebigplanet/images/b/b8/Savannah_5._Accompinament_C.mp3', 
     howl: null
   },
   {
     title: 'Melody',
-    file: 'https://static.wikia.nocookie.net/littlebigplanet/images/f/f6/Savannah_6._Melody.mp3/revision/latest?cb=20220724193149', 
+    file: 'https://static.wikia.nocookie.net/littlebigplanet/images/f/f6/Savannah_6._Melody.mp3', 
     howl: null
   }
 
