@@ -120,7 +120,7 @@ Player.prototype = {
       sound = data.howl;
     } else {
       sound = data.howl = new Howl({
-        src: ['./Savannah/' + data.file], //+ '.webm'], './Savannah/' + data.file + '.mp3'],
+        src: [data.file], //src: ['./Savannah/' + data.file], //+ '.webm'], './Savannah/' + data.file + '.mp3'],
         html5: true, // Force to HTML5 so that the audio can stream in (best for large files).
         onplay: function() {
           // Display the duration.
@@ -427,32 +427,32 @@ Player.prototype = {
 var player = new Player([
   {
     title: 'Percussion', //'Rave Digger',
-    file: 'Savannah_1._Percussion.mp3.mpeg', //'rave_digger',
+    file: 'https://static.wikia.nocookie.net/littlebigplanet/images/4/43/Savannah_1._Percussion.mp3', //'rave_digger',
     howl: null
   },
   {
     title: 'Drums & Bass', //'80s Vibe',
-    file: 'Savannah_2._Drums_&_Bass.mp3.mpeg',//'80s_vibe',
+    file: 'https://static.wikia.nocookie.net/littlebigplanet/images/a/af/Savannah_2._Drums_%26_Bass.mp3/revision/latest?cb=20220724193059',//'80s_vibe',
     howl: null
   },
   {
     title: 'Accompinament A', //'Running Out',
-    file: 'Savannah_3._Accompaniment_A.mp3.mpeg', //'running_out',
+    file: 'https://static.wikia.nocookie.net/littlebigplanet/images/3/30/Savannah_3._Accompaniment_A.mp3/revision/latest?cb=20220724193112', //'running_out',
     howl: null
   },
   {
     title: 'Accompinament B',
-    file: 'Savannah_4._Accompinament_B.mp3.mpeg', 
+    file: 'https://static.wikia.nocookie.net/littlebigplanet/images/7/70/Savannah_4._Accompinament_B.mp3/revision/latest?cb=20220724193128', 
     howl: null
   },
   {
     title: 'Accompinament C',
-    file: 'Savannah_5._Accompinament_C.mp3.mpeg', 
+    file: 'https://static.wikia.nocookie.net/littlebigplanet/images/b/b8/Savannah_5._Accompinament_C.mp3/revision/latest?cb=20220724193139', 
     howl: null
   },
   {
     title: 'Melody',
-    file: 'Savannah_6._Melody.mp3.mpeg', 
+    file: 'https://static.wikia.nocookie.net/littlebigplanet/images/f/f6/Savannah_6._Melody.mp3/revision/latest?cb=20220724193149', 
     howl: null
   }
 
@@ -488,27 +488,28 @@ volumeBtn.addEventListener('click', function() {
 //  player.toggleVolume();
 //});
 
-
-for (var i = 0; i < 6; i++) {
+window.sliderDown = [];
+for (let i = 0; i < 6; i++) {
+  window.sliderDown.push(false);
   barEmptys[i].addEventListener('click', function(event) {
     var per = event.layerX / parseFloat(barEmptys[i].scrollWidth);
     player.volumeTrackAtIndex(per, i);
   });
 
   sliderBtns[i].addEventListener('mousedown', function() {
-    window.sliderDown = true;
+    window.sliderDown[i] = true;
   });
 
   sliderBtns[i].addEventListener('touchstart', function() {
-    window.sliderDown = true;
+    window.sliderDown[i] = true;
   });
 
   volumes[i].addEventListener('mouseup', function() {
-    window.sliderDown = false;
+    window.sliderDown[i] = false;
   });
 
   volumes[i].addEventListener('touchend', function() {
-    window.sliderDown = false;
+    window.sliderDown[i] = false;
   });
 
 
@@ -516,7 +517,8 @@ for (var i = 0; i < 6; i++) {
 
 
 var moves = function(event, index) {
-  if (window.sliderDown) {
+  
+  if (window.sliderDown[index]) {
     var x = event.clientX || event.touches[0].clientX;
     var startX = window.innerWidth * 0.05;
     var layerX = x - startX;
@@ -526,7 +528,7 @@ var moves = function(event, index) {
 };
 
 for (let i = 0; i < 6; i++) {
-  console.log("mover " + i);
+  
   var m = function(event) {moves(event, i)};
   volumes[i].addEventListener('mousemove', m);
   volumes[i].addEventListener('touchmove', m);
