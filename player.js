@@ -84,11 +84,17 @@ Player.prototype = {
       self.play(index);
     });
 
+    self.playlist.forEach(function(song) {
+      song.howl.play();
+    });
+
     //for (var i of Array.from(new Array(self.playlist.length), (x, i) => self.playlist.length - i - 1)) {
     //  self.play(i);
     //}
 
   },
+
+  
 
   /** 
    * Pauses all parts of the song.
@@ -97,9 +103,12 @@ Player.prototype = {
   pauseAll: function() {
     var self = this;
     self.playlist.forEach(function(song, index) {
-      console.log("Pausing " + index);
       self.pauser(index);
     });
+    //Or simply:
+    //self.playlist.forEach(function(song) {
+    //  song.howl.pause();
+    //});
 
     // Show the play button.
     playBtn.style.display = 'block';
@@ -152,8 +161,9 @@ Player.prototype = {
           bar.style.display = 'block';
           
           // While there is only one song, can simply replay same song instead of skipping.
-          self.play(trackIdx);
-          
+          //self.play(trackIdx);
+          self.playlist[trackIdx].howl.play();
+
           //TODO
           //self.skip("next");
 
@@ -180,7 +190,7 @@ Player.prototype = {
     }
 
     // Begin playing the sound.
-    sound.play();
+    //sound.play();
 
     // Update the track display.
     //track.innerHTML = (index + 1) + '. ' + data.title;
