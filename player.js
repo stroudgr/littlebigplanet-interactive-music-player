@@ -1,4 +1,10 @@
+/*
+* The controller for the audio player.
+*/
+
 /*!
+ *  Third Party License.
+ *
  *  Howler.js Audio Player Demo
  *  howlerjs.com
  *
@@ -26,6 +32,7 @@ volumeElms.forEach(function(elm) {
   //window[elm] = document.getElementById(elm);
   window[elm + "s"] = [];
 
+  // TODO 6?
   let N=6, i=0, a=Array(N);
 
   while(i<N) a[i]=i++;
