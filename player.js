@@ -74,7 +74,6 @@ Player.prototype = {
   playAll: function() {
     var self = this;
     self.playlist.forEach(function(song, index) {
-      console.log("I = " + index);
       self.play(index);
     });
 
@@ -256,7 +255,7 @@ Player.prototype = {
     }
 
     // Reset progress.
-    //progress.style.width = '0%';
+    progress.style.width = '0%';
 
     //barFull.style.width = self.volumePercents[index];
     //sliderBtn.style.left = self.volumeSliderButtonLocs[index];
