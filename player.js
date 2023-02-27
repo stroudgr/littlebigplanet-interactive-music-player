@@ -164,8 +164,8 @@ Player.prototype = {
     // Reset progress.
     progress.style.width = '0%';
 
-    barFull.style.width = self.volumePercents[index];
-    sliderBtn.style.left = self.volumeSliderButtonLocs[index];
+    //barFull.style.width = self.volumePercents[index];
+    //sliderBtn.style.left = self.volumeSliderButtonLocs[index];
 
     // Play the new track.
     self.index = index;
@@ -397,6 +397,7 @@ class InteractiveSong {
   }
 
   stop() {
+    var self = this;
     self.tracks.forEach(function(song) {
       if (song.howl) {
         song.howl.stop();
@@ -588,12 +589,12 @@ playBtn.addEventListener('click', function() {
 pauseBtn.addEventListener('click', function() {
   player.pauseAll();
 });
-//prevBtn.addEventListener('click', function() {
-//  player.skip('prev');
-//});
-//nextBtn.addEventListener('click', function() {
-//  player.skip('next');
-//});
+prevBtn.addEventListener('click', function() {
+  player.skip('prev');
+});
+nextBtn.addEventListener('click', function() {
+  player.skip('next');
+});
 waveform.addEventListener('click', function(event) {
   player.seeker(event.clientX / window.innerWidth);
 });
