@@ -579,8 +579,217 @@ var savannah = new InteractiveSong([
     howl: null
   }
 
-  ], "Savannah", "https://static.wikia.nocookie.net/littlebigplanet/images/f/fe/Interactive_African_Savannah.png", "icons/Interactive_African_Savannah-transformed.webp", "#d9a424", "#d77f25");
+  ], "The Savannah", "https://static.wikia.nocookie.net/littlebigplanet/images/f/fe/Interactive_African_Savannah.png", "icons/Interactive_African_Savannah-transformed.webp", "#d9a424", "#d77f25");
 
+
+var wedding = new InteractiveSong([
+  {
+    title: 'Ambient FX',
+    file: 'https://static.wikia.nocookie.net/littlebigplanet/images/b/b0/Wedding_1._Ambient_FX.mp3',
+    howl: null
+  },
+  {
+    title: 'Bass',
+    file: 'https://static.wikia.nocookie.net/littlebigplanet/images/e/e2/Wedding_2._Bass.mp3', 
+    howl: null
+  },
+  {
+    title: 'Drums',
+    file: 'https://static.wikia.nocookie.net/littlebigplanet/images/d/d0/Wedding_3._Drums.mp3',
+    howl: null
+  },
+  {
+    title: 'Accompaniment',
+    file: 'https://static.wikia.nocookie.net/littlebigplanet/images/d/d7/Wedding_4._Accompaniment.mp3', 
+    howl: null
+  },
+  {
+    title: 'Melody A',
+    file: 'https://static.wikia.nocookie.net/littlebigplanet/images/e/ed/Wedding_5._Melody_A.mp3', 
+    howl: null
+  },
+  {
+    title: 'Melody B',
+    file: 'https://static.wikia.nocookie.net/littlebigplanet/images/c/c1/Wedding_6._Melody_B.mp3', 
+    howl: null
+  }
+
+  ], "The Wedding", "https://static.wikia.nocookie.net/littlebigplanet/images/1/13/Interactive_Mexican_Graveyard.png", "", "#d9a424", "#d77f25");
+
+var canyons = new InteractiveSong([
+  {
+    title: 'Ambient FX',
+    file: 'https://static.wikia.nocookie.net/littlebigplanet/images/4/4c/Canyons_1._Ambient_FX.mp3',
+    howl: null
+  },
+  {
+    title: 'Bass',
+    file: 'https://static.wikia.nocookie.net/littlebigplanet/images/9/92/Canyons_2._Bass.mp3', 
+    howl: null
+  },
+  {
+    title: 'Drums',
+    file: 'https://static.wikia.nocookie.net/littlebigplanet/images/c/c8/Canyons_3._Drums.mp3',
+    howl: null
+  },
+  {
+    title: 'Accompaniment',
+    file: 'https://static.wikia.nocookie.net/littlebigplanet/images/d/d5/Canyons_4._Accompaniment.mp3', 
+    howl: null
+  },
+  {
+    title: 'Melody A',
+    file: 'https://static.wikia.nocookie.net/littlebigplanet/images/c/ca/Canyons_5._Melody_A.mp3', 
+    howl: null
+  },
+  {
+    title: 'Melody B',
+    file: 'https://static.wikia.nocookie.net/littlebigplanet/images/a/ae/Canyons_6._Melody_B.mp3', 
+    howl: null
+  }
+
+  ], "The Canyons", "https://static.wikia.nocookie.net/littlebigplanet/images/e/e7/Interactive_Mexican_Desert.png", "", "#d9a424", "#d77f25");
+
+
+var metropolis = new InteractiveSong([
+  {
+    title: 'FX',
+    file: 'https://static.wikia.nocookie.net/littlebigplanet/images/1/15/Metropolis_1._FX.mp3',
+    howl: null
+  },
+  {
+    title: 'Bass',
+    file: 'https://static.wikia.nocookie.net/littlebigplanet/images/3/3d/Metropolis_2._Bass.mp3', 
+    howl: null
+  },
+  {
+    title: 'Drums',
+    file: 'https://static.wikia.nocookie.net/littlebigplanet/images/b/bf/Metropolis_3._Drums.mp3',
+    howl: null
+  },
+  {
+    title: 'Accompaniment',
+    file: 'https://static.wikia.nocookie.net/littlebigplanet/images/1/1b/Metropolis_4._Accompaniment.mp3', 
+    howl: null
+  },
+  {
+    title: 'Melody',
+    file: 'https://static.wikia.nocookie.net/littlebigplanet/images/9/91/Metropolis_5._Melody.mp3', 
+    howl: null
+  },
+  {
+    title: 'Alternative',
+    file: 'https://static.wikia.nocookie.net/littlebigplanet/images/a/a6/Metropolis_6._Alternative.mp3', 
+    howl: null
+  }
+
+  ], "The Metropolis", "https://static.wikia.nocookie.net/littlebigplanet/images/3/39/Interactive_USA_City.png", "", "#d9a424", "#d77f25");
+
+
+var islands = new InteractiveSong([
+  {
+    title: 'Percussion',
+    file: 'https://static.wikia.nocookie.net/littlebigplanet/images/f/f2/Islands_1._Percussion.mp3',
+    howl: null
+  },
+  {
+    title: 'Bass',
+    file: 'https://static.wikia.nocookie.net/littlebigplanet/images/2/23/Islands_2._Bass.mp3', 
+    howl: null
+  },
+  {
+    title: 'Drums',
+    file: 'https://static.wikia.nocookie.net/littlebigplanet/images/5/58/Islands_3._Drums.mp3',
+    howl: null
+  },
+  {
+    title: 'Accompaniment A',
+    file: 'https://static.wikia.nocookie.net/littlebigplanet/images/6/68/Islands_4._Accompaniment_A.mp3', 
+    howl: null
+  },
+  {
+    title: 'Accompaniment B',
+    file: 'https://static.wikia.nocookie.net/littlebigplanet/images/6/63/Islands_5._Accompaniment_B.mp3', 
+    howl: null
+  },
+  {
+    title: 'Melody',
+    file: 'https://static.wikia.nocookie.net/littlebigplanet/images/1/1e/Islands_6._Melody.mp3', 
+    howl: null
+  }
+
+  ], "The Islands", "https://static.wikia.nocookie.net/littlebigplanet/images/8/8d/Interactive_Japanese_Zen.png", "", "#d9a424", "#d77f25");
+
+
+  var temples = new InteractiveSong([
+    {
+      title: 'Ambient FX',
+      file: 'https://static.wikia.nocookie.net/littlebigplanet/images/e/ef/Temples_1._Ambient_FX.mp3',
+      howl: null
+    },
+    {
+      title: 'Percussion',
+      file: 'https://static.wikia.nocookie.net/littlebigplanet/images/6/68/Temples_2._Percussion.mp3', 
+      howl: null
+    },
+    {
+      title: 'Bass',
+      file: 'https://static.wikia.nocookie.net/littlebigplanet/images/1/17/Temples_3._Bass.mp3',
+      howl: null
+    },
+    {
+      title: 'Drums',
+      file: 'https://static.wikia.nocookie.net/littlebigplanet/images/d/d5/Temples_4._Drums.mp3', 
+      howl: null
+    },
+    {
+      title: 'Melody A',
+      file: 'https://static.wikia.nocookie.net/littlebigplanet/images/0/04/Temples_5._Melody_A.mp3', 
+      howl: null
+    },
+    {
+      title: 'Melody B',
+      file: 'https://static.wikia.nocookie.net/littlebigplanet/images/e/e1/Temples_6._Melody_B.mp3', 
+      howl: null
+    }
+  
+    ], "The Temples", "https://static.wikia.nocookie.net/littlebigplanet/images/b/b4/Interactive_Indian_Jungle.png", "", "#d9a424", "#d77f25");
+
+  
+
+  var wilderness = new InteractiveSong([
+    {
+      title: 'Bass',
+      file: 'https://static.wikia.nocookie.net/littlebigplanet/images/e/ec/Wilderness_1._Bass.mp3',
+      howl: null
+    },
+    {
+      title: 'Drums',
+      file: 'https://static.wikia.nocookie.net/littlebigplanet/images/5/50/Wilderness_2._Drums.mp3', 
+      howl: null
+    },
+    {
+      title: 'Accompaniment A',
+      file: 'https://static.wikia.nocookie.net/littlebigplanet/images/a/a9/Wilderness_3._Accompaniment_A.mp3',
+      howl: null
+    },
+    {
+      title: 'Accompaniment B',
+      file: 'https://static.wikia.nocookie.net/littlebigplanet/images/e/e6/Wilderness_4._Accompaniment_B.mp3', 
+      howl: null
+    },
+    {
+      title: 'Orchestra',
+      file: 'https://static.wikia.nocookie.net/littlebigplanet/images/5/57/Wilderness_5._Orchestra.mp3', 
+      howl: null
+    },
+    {
+      title: 'Melody',
+      file: 'https://static.wikia.nocookie.net/littlebigplanet/images/5/57/Wilderness_5._Orchestra.mp3', 
+      howl: null
+    }
+  
+    ], "The Wilderness", "https://static.wikia.nocookie.net/littlebigplanet/images/9/9d/Interactive_Siberian_Tundra.png", "", "#d9a424", "#d77f25");
 
 
 // Setup our new audio player class and pass it the playlist.
@@ -624,7 +833,7 @@ var player = new Player([ // List og songs
     [], // tracks of another song 
     "The Gardens"
   ]
-], [gardens, savannah]
+], [gardens, savannah, wedding, canyons, metropolis, islands, temples, wilderness]
 );
 
 // Bind our player controls.
