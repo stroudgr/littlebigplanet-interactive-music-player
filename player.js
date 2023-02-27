@@ -15,7 +15,7 @@
  */
 
 // Cache references to DOM elements.
-var elms = ['track', 'timer', 'duration', 'playBtn', 'pauseBtn', 'prevBtn', 'nextBtn', 'playlistBtn', 'volumeBtn', 'progress', 'bar', 'wave', 'loading', 'playlist', 'list'];
+var elms = ['track', 'timer', 'duration', 'playBtn', 'pauseBtn', 'prevBtn', 'nextBtn', 'playlistBtn', 'volumeBtn', 'progress', 'bar', 'wave', 'loading', 'playlist', 'list', 'albumIconDiv', 'albumIcon'];
 elms.forEach(function(elm) {
   window[elm] = document.getElementById(elm);
 });
@@ -277,6 +277,8 @@ class InteractiveSong {
   constructor(tracks, title, icon, altIcon) {
     this.tracks = tracks;
     this.title = title;
+    this.icon = icon;
+    this.altIcon = altIcon;
   }
 
   stop() {
@@ -292,6 +294,11 @@ class InteractiveSong {
     self.tracks.forEach(function (track, index) {
       self.load(index);
     });
+
+    albumIcon.src = self.icon;
+    albumIcon.alt = self.altIcon;
+
+
   }
 
   // TODO privatize this method.
@@ -498,22 +505,22 @@ var gardens = new InteractiveSong([
     howl: null
   }
 
-  ], "The Gardens", "", "");
+  ], "The Gardens", "https://static.wikia.nocookie.net/littlebigplanet/images/b/bf/Interactive_English_Garden.png", "icons/Interactive_English_Garden.webp");
 
 var savannah = new InteractiveSong([
   {
-    title: 'Percussion', //'Rave Digger',
-    file: 'https://static.wikia.nocookie.net/littlebigplanet/images/4/43/Savannah_1._Percussion.mp3', //'rave_digger',
+    title: 'Percussion',
+    file: 'https://static.wikia.nocookie.net/littlebigplanet/images/4/43/Savannah_1._Percussion.mp3',
     howl: null
   },
   {
-    title: 'Drums & Bass', //'80s Vibe',
-    file: 'https://static.wikia.nocookie.net/littlebigplanet/images/a/af/Savannah_2._Drums_%26_Bass.mp3',//'80s_vibe',
+    title: 'Drums & Bass',
+    file: 'https://static.wikia.nocookie.net/littlebigplanet/images/a/af/Savannah_2._Drums_%26_Bass.mp3', 
     howl: null
   },
   {
-    title: 'Accompaniment A', //'Running Out',
-    file: 'https://static.wikia.nocookie.net/littlebigplanet/images/3/30/Savannah_3._Accompaniment_A.mp3', //'running_out',
+    title: 'Accompaniment A',
+    file: 'https://static.wikia.nocookie.net/littlebigplanet/images/3/30/Savannah_3._Accompaniment_A.mp3',
     howl: null
   },
   {
@@ -532,7 +539,7 @@ var savannah = new InteractiveSong([
     howl: null
   }
 
-  ], "Savannah", "", "");
+  ], "Savannah", "https://static.wikia.nocookie.net/littlebigplanet/images/f/fe/Interactive_African_Savannah.png", "icons/Interactive_African_Savannah-transformed.webp");
 
 
 
@@ -600,9 +607,9 @@ waveform.addEventListener('click', function(event) {
 playlistBtn.addEventListener('click', function() {
   player.togglePlaylist();
 });
-//playlist.addEventListener('click', function() {
-//  player.togglePlaylist();
-//});
+playlist.addEventListener('click', function() {
+  player.togglePlaylist();
+});
 volumeBtn.addEventListener('click', function() {
   player.toggleVolume();
 });
