@@ -52,7 +52,7 @@ volumeElms.forEach(function(elm) {
  */
 var Player = function(playlist, playlistLBP) {
   
-  this.playlist = playlist;
+  //this.playlist = playlist;
   this.playlistLBP = playlistLBP;
 
   this.index = 0;
@@ -220,7 +220,7 @@ Player.prototype = {
    * Seek to a new position in the currently playing track.
    * @param  {Number} per Percentage through the song to skip.
    */
-  seek: function(per) {
+  /*eek: function(per) {
     var self = this;
 
     // Get the Howl we want to manipulate.
@@ -230,7 +230,7 @@ Player.prototype = {
     if (sound.playing()) {
       sound.seek(sound.duration() * per);
     }
-  },
+  },*/
 
   /**
    * Toggle the playlist display on/off.
@@ -318,12 +318,13 @@ class InteractiveSong {
       self.load(index);
     });
 
+    var bkgd = document.getElementsByTagName('body')[0];
+
     albumIcon.src = self.icon;
     albumIcon.alt = self.altIcon;
 
     if (self.color1 != "" && self.color2 != "") {
-      var bkgd = document.getElementsByTagName('body')[0];
-
+      
       try {
         bkgd.style.background = "linear-gradient(0, " + self.color1 + " 0%, " + self.color2 + " 100%)";
         if( !bkgd.style.background || bkgd.style.background == "none")
@@ -359,7 +360,7 @@ class InteractiveSong {
     } else if (!index) {
     
       sound = data.howl = new Howl({
-        src: [data.file], //src: ['./Savannah/' + data.file], //+ '.webm'], './Savannah/' + data.file + '.mp3'],
+        src: [data.file], //src: ['./audio/Savannah/' + data.file], //+ '.webm'], './audio/Savannah/' + data.file + '.mp3'],
         html5: true, // Force to HTML5 so that the audio can stream in (best for large files).
         onplay: function() {
           // Display the duration.
@@ -406,7 +407,7 @@ class InteractiveSong {
 
     } else {
       sound = data.howl = new Howl({
-        src: [data.file], //src: ['./Savannah/' + data.file], //+ '.webm'], './Savannah/' + data.file + '.mp3'],
+        src: [data.file], //src: ['./audio/Savannah/' + data.file], //+ '.webm'], './audio/Savannah/' + data.file + '.mp3'],
         html5: true, // Force to HTML5 so that the audio can stream in (best for large files).|
       });
     }
@@ -614,7 +615,7 @@ var wedding = new InteractiveSong([
     howl: null
   }
 
-  ], "The Wedding", "https://static.wikia.nocookie.net/littlebigplanet/images/1/13/Interactive_Mexican_Graveyard.png", "", "rgb(145, 146, 182)", "rgb(124, 133, 184)");
+  ], "The Wedding", "https://static.wikia.nocookie.net/littlebigplanet/images/1/13/Interactive_Mexican_Graveyard.png", "icons/Interactive_Mexican_Graveyard.webp", "rgb(145, 146, 182)", "rgb(124, 133, 184)");
 
 
 
@@ -650,7 +651,7 @@ var canyons = new InteractiveSong([
     howl: null
   }
 
-  ], "The Canyons", "https://static.wikia.nocookie.net/littlebigplanet/images/e/e7/Interactive_Mexican_Desert.png", "", "rgb(179, 171, 255)", "rgb(230, 230, 28)");
+  ], "The Canyons", "https://static.wikia.nocookie.net/littlebigplanet/images/e/e7/Interactive_Mexican_Desert.png", "icons/Interactive_Mexican_Desert.webp", "rgb(179, 171, 255)", "rgb(230, 230, 28)");
 
 
 var metropolis = new InteractiveSong([
@@ -685,7 +686,7 @@ var metropolis = new InteractiveSong([
     howl: null
   }
 
-  ], "The Metropolis", "https://static.wikia.nocookie.net/littlebigplanet/images/3/39/Interactive_USA_City.png", "", "rgb(0, 0, 0)", "rgb(100, 98, 123)");
+  ], "The Metropolis", "https://static.wikia.nocookie.net/littlebigplanet/images/3/39/Interactive_USA_City.png", "icons/Interactive_USA_City.webp", "rgb(0, 0, 0)", "rgb(100, 98, 123)");
 
 
 var islands = new InteractiveSong([
@@ -720,7 +721,7 @@ var islands = new InteractiveSong([
     howl: null
   }
 
-  ], "The Islands", "https://static.wikia.nocookie.net/littlebigplanet/images/8/8d/Interactive_Japanese_Zen.png", "", "rgb(0, 107, 68)", "rgb(163, 221, 235)");
+  ], "The Islands", "https://static.wikia.nocookie.net/littlebigplanet/images/8/8d/Interactive_Japanese_Zen.png", "icons/Interactive_Japanese_Zen.webp", "rgb(0, 107, 68)", "rgb(163, 221, 235)");
 
 
   var temples = new InteractiveSong([
@@ -755,7 +756,7 @@ var islands = new InteractiveSong([
       howl: null
     }
   
-    ], "The Temples", "https://static.wikia.nocookie.net/littlebigplanet/images/b/b4/Interactive_Indian_Jungle.png", "", "rgb(151, 158, 127)", "rgb(32, 83, 71)");
+    ], "The Temples", "https://static.wikia.nocookie.net/littlebigplanet/images/b/b4/Interactive_Indian_Jungle.png", "icons/Interactive_Indian_Jungle.webp", "rgb(151, 158, 127)", "rgb(32, 83, 71)");
 
   
 
@@ -791,7 +792,7 @@ var islands = new InteractiveSong([
       howl: null
     }
   
-    ], "The Wilderness", "https://static.wikia.nocookie.net/littlebigplanet/images/9/9d/Interactive_Siberian_Tundra.png", "", "rgb(255, 255, 255)", "rgb(140, 147, 190)");
+    ], "The Wilderness", "https://static.wikia.nocookie.net/littlebigplanet/images/9/9d/Interactive_Siberian_Tundra.png", "icons/Interactive_Siberian_Tundra.webp", "rgb(255, 255, 255)", "rgb(140, 147, 190)");
 
 
 
@@ -977,7 +978,7 @@ var resize = function() {
   wave.container.style.margin = -(height / 2) + 'px auto';
 
   // Update the position of the slider.
-  var sound = player.playlist[player.index].howl;
+  var sound = player.playlistLBP[player.index].tracks[0].howl;
   if (sound) {
     var vol = sound.volume();
     var barWidth = (vol * 0.9);

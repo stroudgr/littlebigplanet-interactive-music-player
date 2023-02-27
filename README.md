@@ -2,8 +2,6 @@
  
 An online music player for the interactive music tracks from LittleBigPlanet.
 
-Currently, this project only works with the Savannah track.
-
 <!-- # Disclaimers
 
 Sony Group Corporation (collectively referred to as “Sony”) is not affiliated with this product. 
