@@ -28,6 +28,8 @@ var volumeElms = ['volume', 'barEmpty', 'barFull', 'sliderBtn'];
 //const collection = document.getElementsByClassName("sliderBtn");
 
 
+var volumeButtons = [];
+
 volumeElms.forEach(function(elm) {
   //window[elm] = document.getElementById(elm);
   window[elm + "s"] = [];
@@ -71,6 +73,9 @@ var Player = function(playlist, playlistLBP) {
       player.skipTo(playlistLBP.indexOf(song));
     };
     list.appendChild(div);
+
+    song.attach(self);
+
   });
 
 
@@ -89,8 +94,14 @@ Player.prototype = {
     //index = typeof index === 'number' ? index : self.index;
 
     self.playlistLBP[self.index].loadAll();
-    self.playlistLBP[self.index].attach(self);
+    //self.playlistLBP[self.index].attach(self);
 
+    for (let index = 0; index < 6; index++) {
+
+      barFulls[index].style.width = 90 + '%';
+      sliderBtns[index].style.left = (window.innerWidth * 0.9 + window.innerWidth * 0.05 - 25) + 'px';
+
+    } 
 
     track.innerHTML = self.playlistLBP[self.index].title;
     self.playlistLBP[self.index].play();
@@ -977,13 +988,17 @@ var resize = function() {
   wave.canvas.width = width;
   wave.container.style.margin = -(height / 2) + 'px auto';
 
-  // Update the position of the slider.
-  var sound = player.playlistLBP[player.index].tracks[0].howl;
-  if (sound) {
-    var vol = sound.volume();
-    var barWidth = (vol * 0.9);
-    sliderBtns[0].style.left = (window.innerWidth * barWidth + window.innerWidth * 0.05 - 25) + 'px';
-  }
+  player.playlistLBP[player.index].tracks.forEach(function(song, index) {
+    // Update the position of the slider.
+    //var sound = player.playlistLBP[player.index].tracks[0].howl;
+    if (song.howl) {
+      var vol = song.howl.volume();
+      var barWidth = (vol * 0.9);
+
+      sliderBtns[index].style.left = (window.innerWidth * barWidth + window.innerWidth * 0.05 - 25) + 'px';
+    }
+  });
+  
 };
 window.addEventListener('resize', resize);
 resize();
