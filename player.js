@@ -89,6 +89,7 @@ Player.prototype = {
     //index = typeof index === 'number' ? index : self.index;
 
     self.playlistLBP[self.index].loadAll();
+    track.innerHTML = self.playlistLBP[self.index].title;
     self.playlistLBP[self.index].play();
 
     // Show the pause button.
@@ -231,14 +232,12 @@ Player.prototype = {
    */
   togglePlaylist: function() {
 
-    //TODO
-    var self = this;
-    var display = (playlist.style.display === 'block') ? 'none' : 'block';
+    var display = (window.playlist.style.display === 'block') ? 'none' : 'block';
 
     setTimeout(function() {
-      playlist.style.display = display;
+      window.playlist.style.display = display;
     }, (display === 'block') ? 0 : 500);
-    playlist.className = (display === 'block') ? 'fadein' : 'fadeout';
+    window.playlist.className = (display === 'block') ? 'fadein' : 'fadeout';
   },
 
   /**
@@ -275,7 +274,7 @@ Player.prototype = {
 };
 
 class InteractiveSong {
-  constructor(tracks, title) {
+  constructor(tracks, title, icon, altIcon) {
     this.tracks = tracks;
     this.title = title;
   }
@@ -499,7 +498,7 @@ var gardens = new InteractiveSong([
     howl: null
   }
 
-  ], "Savannah");
+  ], "The Gardens", "", "");
 
 var savannah = new InteractiveSong([
   {
@@ -533,7 +532,7 @@ var savannah = new InteractiveSong([
     howl: null
   }
 
-  ], "Savannah");
+  ], "Savannah", "", "");
 
 
 
@@ -598,9 +597,9 @@ nextBtn.addEventListener('click', function() {
 waveform.addEventListener('click', function(event) {
   player.seeker(event.clientX / window.innerWidth);
 });
-//playlistBtn.addEventListener('click', function() {
-//  player.togglePlaylist();
-//});
+playlistBtn.addEventListener('click', function() {
+  player.togglePlaylist();
+});
 //playlist.addEventListener('click', function() {
 //  player.togglePlaylist();
 //});
