@@ -56,7 +56,7 @@ var Player = function(playlist, playlistLBP) {
 
   this.playlistLBP = playlistLBP;
 
-  this.index = 0;
+  /*this.index = 0;
   this.length = playlist[0][0].length;
     
   // Display the title of the first track.
@@ -72,7 +72,27 @@ var Player = function(playlist, playlistLBP) {
       player.skipTo(playlist.indexOf(song));
     };
     list.appendChild(div);
+  });*/
+
+  this.index = 0;
+  this.length = this.playlistLBP.length;
+
+  // Display the title of the first track.
+  track.innerHTML = playlistLBP[0].title;
+
+  // Setup the playlist display.
+  this.playlistLBP.forEach(function(song) {
+    var div = document.createElement('div');
+    div.className = 'list-song';
+    div.innerHTML = song.title;
+    
+    div.onclick = function() {
+      player.skipTo(playlistLBP.indexOf(song));
+    };
+    list.appendChild(div);
   });
+
+
 };
 Player.prototype = {
   /** 
@@ -80,18 +100,32 @@ Player.prototype = {
    * 
    * **/
   playAll: function() {
-    var self = this;
+    /*var self = this;
     self.playlist.forEach(function(song, index) {
       self.play(index);
     });
 
     self.playlist.forEach(function(song) {
       song.howl.play();
-    });
+    });*/
+    
+    var self = this;
 
-    //for (var i of Array.from(new Array(self.playlist.length), (x, i) => self.playlist.length - i - 1)) {
-    //  self.play(i);
-    //}
+    self.playlistLBP[self.index].loadAll();
+    self.playlistLBP[self.index].play();
+
+
+    // Show the pause button.
+    if (self.playlistLBP[self.index].tracks[0].howl.state() === 'loaded') {
+      playBtn.style.display = 'none';
+      pauseBtn.style.display = 'block';
+    } else {
+      loading.style.display = 'block';
+      playBtn.style.display = 'none';
+      pauseBtn.style.display = 'none';
+    }
+
+
 
   },
 
@@ -102,14 +136,14 @@ Player.prototype = {
    * 
    * **/
   pauseAll: function() {
-    var self = this;
-    //self.playlist.forEach(function(song, index) {
-    //  self.pauser(index);
-    //});
-    //Or simply:
+    
+    /*var self = this;
     self.playlist.forEach(function(song) {
       song.howl.pause();
-    });
+    });*/
+
+    var self = this;
+    self.playlistLBP[self.index].pauseIt();
 
     // Show the play button.
     playBtn.style.display = 'block';
@@ -121,7 +155,7 @@ Player.prototype = {
    * Play a song in the playlist.
    * @param  {Number} index Index of the song in the playlist (leave empty to play the first or current).
    */
-  play: function(index) {
+  /*play: function(index) {
     var self = this;
     var sound;
 
@@ -211,25 +245,35 @@ Player.prototype = {
   },
 
   pauser: function(index) {
-    var self = this;
+    /*var self = this;
     // Get the Howl we want to manipulate.
     var sound = self.playlist[index].howl;
 
     // Pause the sound.
     sound.pause();
-  },
+
+    var self = this;
+
+    self.playlist[index].pauseIt();
+
+  },*/
 
   /**
    * Pause the currently playing track.
    */
   pause: function() {
-    var self = this;
+    /*var self = this;
 
     // Get the Howl we want to manipulate.
     var sound = self.playlist[self.index].howl;
 
-    // Puase the sound.
-    sound.pause();
+    // Pause the sound.
+    sound.pause();*/
+
+
+    var self = this;
+
+    self.playlist[self.index].pauseIt();
 
     // Show the play button.
     playBtn.style.display = 'block';
@@ -248,11 +292,11 @@ Player.prototype = {
     if (direction === 'prev') {
       index = self.index - 1;
       if (index < 0) {
-        index = self.playlist.length - 1;
+        index = self.playlistLBP.length - 1;
       }
     } else {
       index = self.index + 1;
-      if (index >= self.playlist.length) {
+      if (index >= self.playlistLBP.length) {
         index = 0;
       }
     }
@@ -267,10 +311,9 @@ Player.prototype = {
   skipTo: function(index) {
     var self = this;
 
+    self.playlistLBP[self.index].stop();
     // Stop the current track.
-    if (self.playlist[self.index].howl) {
-      self.playlist[self.index].howl.stop();
-    }
+   
 
     // Reset progress.
     progress.style.width = '0%';
@@ -279,22 +322,17 @@ Player.prototype = {
     //sliderBtn.style.left = self.volumeSliderButtonLocs[index];
 
     // Play the new track.
-    self.play(index);
+    self.index = index;
+    self.playAll();
   },
 
   volumeTrackAtIndex(val, index) {
     var self = this;
-    var sound = self.playlist[index].howl;
-
-    sound.volume(val);
+    self.playlistLBP[self.index].volumeTrackAtIndex(val, index);
 
     var barWidth = (val * 90) / 100;
     barFulls[index].style.width = (barWidth * 100) + '%';
     sliderBtns[index].style.left = (window.innerWidth * barWidth + window.innerWidth * 0.05 - 25) + 'px';
-
-    //self.volumePercents[index] = barFulls[index].style.width;
-    //self.volumeSliderButtonLocs[index] = sliderBtns[index].style.left;
-
 
   },
 
@@ -302,16 +340,11 @@ Player.prototype = {
   volumeTrack: function(val) {
     var self = this;
 
-    var sound = self.playlist[self.index].howl;
-
-    sound.volume(val);
+    self.playlistLBP[self.index].volumeTrack(val);
 
     var barWidth = (val * 90) / 100;
     barFull.style.width = (barWidth * 100) + '%';
     sliderBtn.style.left = (window.innerWidth * barWidth + window.innerWidth * 0.05 - 25) + 'px';
-
-    self.volumePercents[self.index] = barFull.style.width;
-    self.volumeSliderButtonLocs[self.index] = sliderBtn.style.left;
 
   },
 
@@ -320,7 +353,7 @@ Player.prototype = {
    * Set the volume and update the volume slider display.
    * @param  {Number} val Volume between 0 and 1.
    */
-  volume: function(val) {
+  /*volume: function(val) {
     var self = this;
 
     // Update the global volume (affecting all Howls).
@@ -332,12 +365,14 @@ Player.prototype = {
     sliderBtn.style.left = (window.innerWidth * barWidth + window.innerWidth * 0.05 - 25) + 'px';
   
   
-  },
+  },*/
 
   seeker: function(per) {
     var self = this;
 
-    for (var i = 0; i < self.playlist.length; i++) {
+    self.playlistLBP[self.index].seeker(per);
+
+    /*for (var i = 0; i < self.playlist.length; i++) {
       // Get the Howl we want to manipulate.
       var sound = self.playlist[i].howl;
 
@@ -345,7 +380,7 @@ Player.prototype = {
       if (sound.playing()) {
         sound.seek(sound.duration() * per);
       }
-    }
+    }*/
   },
 
 
@@ -368,7 +403,7 @@ Player.prototype = {
   /**
    * The step called within requestAnimationFrame to update the playback position.
    */
-  step: function() {
+  /*step: function() {
     var self = this;
 
     // Get the Howl we want to manipulate.
@@ -383,12 +418,14 @@ Player.prototype = {
     if (sound.playing()) {
       requestAnimationFrame(self.step.bind(self));
     }
-  },
+  },*/
 
   /**
    * Toggle the playlist display on/off.
    */
   togglePlaylist: function() {
+
+    //TODO
     var self = this;
     var display = (playlist.style.display === 'block') ? 'none' : 'block';
 
@@ -406,22 +443,24 @@ Player.prototype = {
     //var display = (volume.style.display === 'block') ? 'none' : 'block';
 
     var displays = [];
+
+    let N = self.playlistLBP[self.index].tracks.length;
     
-    for (var i = 0; i < self.length; i++) {
+    for (var i = 0; i < N; i++) {
       var d = (window["volume" + i].style.display === 'block') ? 'none' : 'block';
       displays.push(d);
     }
 
     setTimeout(function() {
       //volume.style.display = display;
-      for (var i = 0; i < self.length; i++) {
+      for (var i = 0; i < N; i++) {
         window["volume" + i].style.display = displays[i];
       }
     }, (displays[0] === 'block') ? 0 : 500);
 
     //volume.className = (display === 'block') ? 'volumey fadein' : 'volumey fadeout';
 
-    for (var i = 0; i < self.length; i++) {
+    for (var i = 0; i < N; i++) {
       window["volume" + i].className  = (displays[i] === 'block') ? 'volumey fadein' : 'volumey fadeout';
     }
 
@@ -444,6 +483,21 @@ class InteractiveSong {
   constructor(tracks, title) {
     this.tracks = tracks;
     this.title = title;
+  }
+
+  stop() {
+    self.tracks.forEach(function(song){
+      if (song.howl) {
+        song.howl.stop();
+      }
+    });
+  }
+
+  loadAll() {
+    var self = this;
+    self.tracks.forEach(function (track, index) {
+      self.load(index);
+    });
   }
 
   // TODO privatize this method.
@@ -534,7 +588,9 @@ class InteractiveSong {
   }
 
 
-  pause() {
+  pauseIt() {
+
+    var self = this;
 
     //Or simply:
     self.tracks.forEach(function(song) {
@@ -562,13 +618,19 @@ class InteractiveSong {
 
     sound.volume(val);
 
-    var barWidth = (val * 90) / 100;
-    barFulls[index].style.width = (barWidth * 100) + '%';
-    sliderBtns[index].style.left = (window.innerWidth * barWidth + window.innerWidth * 0.05 - 25) + 'px';
+    //var barWidth = (val * 90) / 100;
+    //barFulls[index].style.width = (barWidth * 100) + '%';
+    //sliderBtns[index].style.left = (window.innerWidth * barWidth + window.innerWidth * 0.05 - 25) + 'px';
 
-    //self.volumePercents[index] = barFulls[index].style.width;
-    //self.volumeSliderButtonLocs[index] = sliderBtns[index].style.left;
   }
+
+
+  volumeTrackAtIndex(val, index) {
+    var self = this;
+  
+  }
+
+
 
 
   volumeTrack(val) {
@@ -577,10 +639,11 @@ class InteractiveSong {
     self.tracks.forEach(function(song){
       song.volume(val);
     });
+
     
-    var barWidth = (val * 90) / 100;
-    barFull.style.width = (barWidth * 100) + '%';
-    sliderBtn.style.left = (window.innerWidth * barWidth + window.innerWidth * 0.05 - 25) + 'px';
+    //var barWidth = (val * 90) / 100;
+    //barFull.style.width = (barWidth * 100) + '%';
+    //sliderBtn.style.left = (window.innerWidth * barWidth + window.innerWidth * 0.05 - 25) + 'px';
 
   }
 
@@ -589,13 +652,14 @@ class InteractiveSong {
 
     for (var i = 0; i < self.tracks.length; i++) {
       // Get the Howl we want to manipulate.
-      var sound = self.playlist[i].howl;
+      var sound = self.tracks[i].howl;
 
       // Convert the percent into a seek position.
       if (sound.playing()) {
         sound.seek(sound.duration() * per);
       }
     }
+
   }
 
 
@@ -606,7 +670,7 @@ class InteractiveSong {
     var self = this;
 
     // Get any Howl track.
-    var sound = self.playlist[0].howl;
+    var sound = self.tracks[0].howl;
 
     // Determine our current seek position.
     var seek = sound.seek() || 0;
@@ -617,6 +681,18 @@ class InteractiveSong {
     if (sound.playing()) {
       requestAnimationFrame(self.step.bind(self));
     }
+  }
+
+  /**
+   * Format the time from seconds to M:SS.
+   * @param  {Number} secons Seconds to format.
+   * @return {String}      Formatted time.
+   */
+  formatTime(secons) {
+    var minutes = Math.floor(secons / 60) || 0;
+    var seconds = (secons - minutes * 60) || 0;
+
+    return minutes + ':' + (seconds < 10 ? '0' : '') + seconds;
   }
 
 
