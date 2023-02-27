@@ -89,6 +89,9 @@ Player.prototype = {
     //index = typeof index === 'number' ? index : self.index;
 
     self.playlistLBP[self.index].loadAll();
+    self.playlistLBP[self.index].attach(self);
+
+
     track.innerHTML = self.playlistLBP[self.index].title;
     self.playlistLBP[self.index].play();
 
@@ -103,6 +106,11 @@ Player.prototype = {
     }
 
   },
+
+  notify: function(msg){
+    this.skip(msg);
+  },
+
 
   /** 
    * Pause the current song.
@@ -279,6 +287,17 @@ class InteractiveSong {
     this.title = title;
     this.icon = icon;
     this.altIcon = altIcon;
+    this.observers = [];
+  }
+
+  attach(obs) {
+    this.observers.push(obs);
+  }
+
+  notifyObservers(msg){
+    this.observers.forEach(function(obs){
+      obs.notify(msg);
+    });
   }
 
   stop() {
@@ -297,7 +316,6 @@ class InteractiveSong {
 
     albumIcon.src = self.icon;
     albumIcon.alt = self.altIcon;
-
 
   }
 
@@ -344,11 +362,15 @@ class InteractiveSong {
           
           // While there is only one song, can simply replay same song instead of skipping.
           //self.play(trackIdx);
-          self.tracks[trackIdx].howl.play();
+          //self.tracks[trackIdx].howl.play();
 
           //TODO
           //self.skip("next");
 
+          if (!trackIdx) {
+            console.log("aahah");
+            self.notifyObservers("next");
+          }
           // Shows play button when song ends.
           //playBtn.style.display = 'block';
           //pauseBtn.style.display = 'none';
