@@ -282,12 +282,14 @@ Player.prototype = {
 };
 
 class InteractiveSong {
-  constructor(tracks, title, icon, altIcon) {
+  constructor(tracks, title, icon, altIcon, color1, color2) {
     this.tracks = tracks;
     this.title = title;
     this.icon = icon;
     this.altIcon = altIcon;
     this.observers = [];
+    this.color1 = color1;
+    this.color2 = color2;
   }
 
   attach(obs) {
@@ -301,6 +303,7 @@ class InteractiveSong {
   }
 
   stop() {
+    var self = this;
     self.tracks.forEach(function(song){
       if (song.howl) {
         song.howl.stop();
@@ -316,6 +319,26 @@ class InteractiveSong {
 
     albumIcon.src = self.icon;
     albumIcon.alt = self.altIcon;
+
+    if (self.color1 != "" && self.color2 != "") {
+      var bkgd = document.getElementsByTagName('body')[0];
+
+      try {
+        bkgd.style.background = "linear-gradient(0, " + self.color1 + " 0%, " + self.color2 + " 100%)";
+        if( !bkgd.style.background || bkgd.style.background == "none")
+          bkgd.style.background = "-webkit-linear-gradient(-45deg, " + self.color1 + " 0%, " + self.color2 + " 100%)";
+        if( !bkgd.style.background || bkgd.style.background == "none")
+          bkgd.style.background = "-moz-linear-gradient(-45deg, " + self.color1 + " 0%, " + self.color2 + " 100%);";
+        //if( !bkgd.style.backgroundImage || bkgd.style.backgroundImage == "none")
+        //  bkgd.style.backgroundImage = "-o-linear-gradient(...)";
+        //if( !bkgd.style.backgroundImage || bkgd.style.backgroundImage == "none")
+          // gradient not supported, fall back here
+      }
+      catch(e) {
+        // gradient not supported and browser does't like bad values. Fall back here
+      }
+
+    }
 
   }
 
@@ -527,7 +550,7 @@ var gardens = new InteractiveSong([
     howl: null
   }
 
-  ], "The Gardens", "https://static.wikia.nocookie.net/littlebigplanet/images/b/bf/Interactive_English_Garden.png", "icons/Interactive_English_Garden.webp");
+  ], "The Gardens", "https://static.wikia.nocookie.net/littlebigplanet/images/b/bf/Interactive_English_Garden.png", "icons/Interactive_English_Garden.webp", "#2b8d4f",  "#0a7339");
 
 var savannah = new InteractiveSong([
   {
@@ -561,7 +584,7 @@ var savannah = new InteractiveSong([
     howl: null
   }
 
-  ], "Savannah", "https://static.wikia.nocookie.net/littlebigplanet/images/f/fe/Interactive_African_Savannah.png", "icons/Interactive_African_Savannah-transformed.webp");
+  ], "Savannah", "https://static.wikia.nocookie.net/littlebigplanet/images/f/fe/Interactive_African_Savannah.png", "icons/Interactive_African_Savannah-transformed.webp", "#d9a424", "#d77f25");
 
 
 
