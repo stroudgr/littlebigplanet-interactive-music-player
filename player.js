@@ -14,6 +14,8 @@
  *  MIT License
  */
 
+
+
 // Cache references to DOM elements.
 var elms = ['track', 'timer', 'duration', 'playBtn', 'pauseBtn', 'prevBtn', 'nextBtn', 'playlistBtn', 'volumeBtn', 'progress', 'bar', 'wave', 'loading', 'playlist', 'list', 'albumIconDiv', 'albumIcon'];
 elms.forEach(function(elm) {
@@ -22,6 +24,8 @@ elms.forEach(function(elm) {
 
 var volumeElms = ['volume', 'barEmpty', 'barFull', 'sliderBtn'];
 
+
+//TODO
 //const collection = document.getElementsByClassName("volume");
 //const collection = document.getElementsByClassName("barFull");
 //const collection = document.getElementsByClassName("barEmpty");
@@ -52,9 +56,8 @@ volumeElms.forEach(function(elm) {
  * Includes all methods for playing, skipping, updating the display, etc.
  * @param {Array} playlist Array of objects with playlist song details ({title, file, howl}).
  */
-var Player = function(playlist, playlistLBP) {
+var Player = function(playlistLBP) {
   
-  //this.playlist = playlist;
   this.playlistLBP = playlistLBP;
 
   this.index = 0;
@@ -81,20 +84,19 @@ var Player = function(playlist, playlistLBP) {
 
 };
 Player.prototype = {
-  /** 
-   * Play the current song.
-   * 
+
+  /**
+   * Play a song in the playlist.
+   * @param  {Number} index Index of the song in the playlist (leave empty to play the first or current).
    */
   playAll: function() {
     
     var self = this;
 
-
     // TODO???
     //index = typeof index === 'number' ? index : self.index;
 
     self.playlistLBP[self.index].loadAll();
-    //self.playlistLBP[self.index].attach(self);
 
     for (let index = 0; index < 6; index++) {
 
@@ -118,6 +120,10 @@ Player.prototype = {
 
   },
 
+  /** 
+   * Triggered when a Howl song finishes.
+   * 
+   */
   notify: function(msg){
     this.skip(msg);
   },
@@ -138,14 +144,6 @@ Player.prototype = {
 
   },
 
-  /**
-   * Play a song in the playlist.
-   * @param  {Number} index Index of the song in the playlist (leave empty to play the first or current).
-   */
-  //TODO placement of comment
-
-
-  
 
   /**
    * Skip to the next or previous track.
@@ -189,6 +187,13 @@ Player.prototype = {
     self.playAll();
   },
 
+
+
+  /**
+   * Set the volume and update the volume slider display.
+   * @param  {Number} val Volume between 0 and 1.
+   * @param  {Number} index Track to change volume
+   */
   volumeTrackAtIndex(val, index) {
     var self = this;
     self.playlistLBP[self.index].volumeTrackAtIndex(val, index);
@@ -213,36 +218,18 @@ Player.prototype = {
 
   },*/
 
-
-  // tODO comment put somewhere
-  /**
-   * Set the volume and update the volume slider display.
-   * @param  {Number} val Volume between 0 and 1.
-   */
  
-
+  /**
+   * Seek to a new position in the currently playing track.
+   * @param  {Number} per Percentage through the song to skip.
+   */
   seeker: function(per) {
     var self = this;
     self.playlistLBP[self.index].seeker(per);
   },
 
 
-  /**
-   * Seek to a new position in the currently playing track.
-   * @param  {Number} per Percentage through the song to skip.
-   */
-  /*eek: function(per) {
-    var self = this;
-
-    // Get the Howl we want to manipulate.
-    var sound = self.playlist[self.index].howl;
-
-    // Convert the percent into a seek position.
-    if (sound.playing()) {
-      sound.seek(sound.duration() * per);
-    }
-  },*/
-
+  
   /**
    * Toggle the playlist display on/off.
    */
@@ -256,13 +243,13 @@ Player.prototype = {
     window.playlist.className = (display === 'block') ? 'fadein' : 'fadeout';
   },
 
+
   /**
    * Toggle the volume display on/off.
    */
   toggleVolume: function() {
     var self = this;
-    //var display = (volume.style.display === 'block') ? 'none' : 'block';
-
+    
     var displays = [];
 
     let N = self.playlistLBP[self.index].tracks.length;
@@ -273,13 +260,10 @@ Player.prototype = {
     }
 
     setTimeout(function() {
-      //volume.style.display = display;
       for (var i = 0; i < N; i++) {
         window["volume" + i].style.display = displays[i];
       }
     }, (displays[0] === 'block') ? 0 : 500);
-
-    //volume.className = (display === 'block') ? 'volumey fadein' : 'volumey fadeout';
 
     for (var i = 0; i < N; i++) {
       window["volume" + i].className  = (displays[i] === 'block') ? 'volumey fadein' : 'volumey fadeout';
@@ -348,7 +332,7 @@ class InteractiveSong {
           // gradient not supported, fall back here
       }
       catch(e) {
-        // gradient not supported and browser does't like bad values. Fall back here
+        // gradient not supported and browser doesn't like bad values. Fall back here
       }
 
     }
@@ -480,7 +464,7 @@ class InteractiveSong {
       }
     }
 
-    // Alternatively:
+    // Alternatively: TODO
     /*self.forEach(function(song){
       if (song.howl.playing())
         song.howl.seek(song.howl.duration() * per);
@@ -521,9 +505,8 @@ class InteractiveSong {
     return minutes + ':' + (seconds < 10 ? '0' : '') + seconds;
   }
 
-
-
 }
+
 
 var gardens = new InteractiveSong([
   {
@@ -809,48 +792,7 @@ var islands = new InteractiveSong([
 
 
 // Setup our new audio player class and pass it the playlist.
-var player = new Player([ // List og songs
-  [ // A song
-    [ // list of tracks in this song.
-    {
-      title: 'Percussion', //'Rave Digger',
-      file: 'https://static.wikia.nocookie.net/littlebigplanet/images/4/43/Savannah_1._Percussion.mp3', //'rave_digger',
-      howl: null
-    },
-    {
-      title: 'Drums & Bass', //'80s Vibe',
-      file: 'https://static.wikia.nocookie.net/littlebigplanet/images/a/af/Savannah_2._Drums_%26_Bass.mp3',//'80s_vibe',
-      howl: null
-    },
-    {
-      title: 'Accompaniment A', //'Running Out',
-      file: 'https://static.wikia.nocookie.net/littlebigplanet/images/3/30/Savannah_3._Accompaniment_A.mp3', //'running_out',
-      howl: null
-    },
-    {
-      title: 'Accompaniment B',
-      file: 'https://static.wikia.nocookie.net/littlebigplanet/images/7/70/Savannah_4._Accompinament_B.mp3', 
-      howl: null
-    },
-    {
-      title: 'Accompaniment C',
-      file: 'https://static.wikia.nocookie.net/littlebigplanet/images/b/b8/Savannah_5._Accompinament_C.mp3', 
-      howl: null
-    },
-    {
-      title: 'Melody',
-      file: 'https://static.wikia.nocookie.net/littlebigplanet/images/f/f6/Savannah_6._Melody.mp3', 
-      howl: null
-    }
-
-    ], "Savannah"
-  ],
-  [ // Another song
-    [], // tracks of another song 
-    "The Gardens"
-  ]
-], [gardens, savannah, wedding, canyons, metropolis, islands, temples, wilderness]
-);
+var player = new Player([gardens, savannah, wedding, canyons, metropolis, islands, temples, wilderness]);
 
 // Bind our player controls.
 playBtn.addEventListener('click', function() {
@@ -927,39 +869,6 @@ for (let i = 0; i < 6; i++) {
   volumes[i].addEventListener('touchmove', m);
 }
 
-
-
-
-// Setup the event listeners to enable dragging of volume slider.
-/*barEmpty.addEventListener('click', function(event) {
-  var per = event.layerX / parseFloat(barEmpty.scrollWidth);
-  player.volumeTrack(per);
-});
-sliderBtn.addEventListener('mousedown', function() {
-  window.sliderDown = true;
-});
-sliderBtn.addEventListener('touchstart', function() {
-  window.sliderDown = true;
-});
-volume.addEventListener('mouseup', function() {
-  window.sliderDown = false;
-});
-volume.addEventListener('touchend', function() {
-  window.sliderDown = false;
-});*/
-
-/*var move = function(event) {
-  if (window.sliderDown) {
-    var x = event.clientX || event.touches[0].clientX;
-    var startX = window.innerWidth * 0.05;
-    var layerX = x - startX;
-    var per = Math.min(1, Math.max(0, layerX / parseFloat(barEmpty.scrollWidth)));
-    player.volumeTrack(per);
-  }
-};*/
-
-//volume.addEventListener('mousemove', move);
-//volume.addEventListener('touchmove', move);
 
 // Setup the "waveform" animation.
 var wave = new SiriWave({
