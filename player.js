@@ -131,7 +131,7 @@ Player.prototype = {
    * Play a song in the playlist.
    * @param  {Number} index Index of the song in the playlist (leave empty to play the first or current).
    */
-  //TODO placmeent of comment
+  //TODO placement of comment
 
 
   
@@ -172,9 +172,6 @@ Player.prototype = {
     
     // Reset progress.
     progress.style.width = '0%';
-
-    //barFull.style.width = self.volumePercents[index];
-    //sliderBtn.style.left = self.volumeSliderButtonLocs[index];
 
     // Play the new track.
     self.index = index;
@@ -293,10 +290,13 @@ class InteractiveSong {
   }
 
   attach(obs) {
-    this.observers.push(obs);
+    if (this.observers.indexOf(obs) === -1)
+      this.observers.push(obs);
   }
 
   notifyObservers(msg){
+    var self = this;
+    
     this.observers.forEach(function(obs){
       obs.notify(msg);
     });
@@ -312,6 +312,7 @@ class InteractiveSong {
   }
 
   loadAll() {
+    //console.log("Loading " + this.title + " ...");
     var self = this;
     self.tracks.forEach(function (track, index) {
       self.load(index);
@@ -355,7 +356,7 @@ class InteractiveSong {
     // Otherwise, setup and load a new Howl.
     if (data.howl) {
       sound = data.howl;
-    } else {
+    } else if (!index) {
     
       sound = data.howl = new Howl({
         src: [data.file], //src: ['./Savannah/' + data.file], //+ '.webm'], './Savannah/' + data.file + '.mp3'],
@@ -383,20 +384,7 @@ class InteractiveSong {
           wave.container.style.display = 'none';
           bar.style.display = 'block';
           
-          // While there is only one song, can simply replay same song instead of skipping.
-          //self.play(trackIdx);
-          //self.tracks[trackIdx].howl.play();
-
-          //TODO
-          //self.skip("next");
-
-          if (!trackIdx) {
-            console.log("aahah");
-            self.notifyObservers("next");
-          }
-          // Shows play button when song ends.
-          //playBtn.style.display = 'block';
-          //pauseBtn.style.display = 'none';
+          self.notifyObservers("next");
           
         },
         onpause: function() {
@@ -416,6 +404,11 @@ class InteractiveSong {
       });
 
 
+    } else {
+      sound = data.howl = new Howl({
+        src: [data.file], //src: ['./Savannah/' + data.file], //+ '.webm'], './Savannah/' + data.file + '.mp3'],
+        html5: true, // Force to HTML5 so that the audio can stream in (best for large files).|
+      });
     }
 
   }
@@ -440,10 +433,6 @@ class InteractiveSong {
     self.tracks.forEach(function(song) {
       song.howl.pause();
     });
-
-    // Show the play button.
-    //playBtn.style.display = 'block';
-    //pauseBtn.style.display = 'none';
 
   }
 
@@ -479,6 +468,12 @@ class InteractiveSong {
       }
     }
 
+    // Alternatively:
+    /*self.forEach(function(song){
+      if (song.howl.playing())
+        song.howl.seek(song.howl.duration() * per);
+    });*/
+
   }
 
 
@@ -488,7 +483,7 @@ class InteractiveSong {
   step() {
     var self = this;
 
-    // Get any Howl track.
+    // Get any Howl track (they are all the same length).
     var sound = self.tracks[0].howl;
 
     // Determine our current seek position.
@@ -634,7 +629,6 @@ var player = new Player([ // List og songs
 
 // Bind our player controls.
 playBtn.addEventListener('click', function() {
-  //player.play();
   player.playAll();
 });
 pauseBtn.addEventListener('click', function() {
