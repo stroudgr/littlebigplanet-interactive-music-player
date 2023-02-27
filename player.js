@@ -51,28 +51,9 @@ volumeElms.forEach(function(elm) {
  * @param {Array} playlist Array of objects with playlist song details ({title, file, howl}).
  */
 var Player = function(playlist, playlistLBP) {
-  this.playlist = playlist[0][0];
-
-
+  
+  this.playlist = playlist;
   this.playlistLBP = playlistLBP;
-
-  /*this.index = 0;
-  this.length = playlist[0][0].length;
-    
-  // Display the title of the first track.
-  track.innerHTML = playlist[0][1];
-
-  // Setup the playlist display.
-  playlist.forEach(function(song) {
-    var div = document.createElement('div');
-    div.className = 'list-song';
-    div.innerHTML = song.title;
-    //TODO
-    div.onclick = function() {
-      player.skipTo(playlist.indexOf(song));
-    };
-    list.appendChild(div);
-  });*/
 
   this.index = 0;
   this.length = this.playlistLBP.length;
@@ -96,24 +77,19 @@ var Player = function(playlist, playlistLBP) {
 };
 Player.prototype = {
   /** 
-   * Play all parts of the song.
+   * Play the current song.
    * 
-   * **/
+   */
   playAll: function() {
-    /*var self = this;
-    self.playlist.forEach(function(song, index) {
-      self.play(index);
-    });
-
-    self.playlist.forEach(function(song) {
-      song.howl.play();
-    });*/
     
     var self = this;
 
+
+    // TODO???
+    //index = typeof index === 'number' ? index : self.index;
+
     self.playlistLBP[self.index].loadAll();
     self.playlistLBP[self.index].play();
-
 
     // Show the pause button.
     if (self.playlistLBP[self.index].tracks[0].howl.state() === 'loaded') {
@@ -125,23 +101,14 @@ Player.prototype = {
       pauseBtn.style.display = 'none';
     }
 
-
-
   },
 
-  
-
   /** 
-   * Pauses all parts of the song.
+   * Pause the current song.
    * 
-   * **/
+   */
   pauseAll: function() {
     
-    /*var self = this;
-    self.playlist.forEach(function(song) {
-      song.howl.pause();
-    });*/
-
     var self = this;
     self.playlistLBP[self.index].pauseIt();
 
@@ -155,130 +122,10 @@ Player.prototype = {
    * Play a song in the playlist.
    * @param  {Number} index Index of the song in the playlist (leave empty to play the first or current).
    */
-  /*play: function(index) {
-    var self = this;
-    var sound;
-
-    index = typeof index === 'number' ? index : self.index;
-    var data = self.playlist[index];
-
-    let trackIdx = index;
-
-    // If we already loaded this track, use the current one.
-    // Otherwise, setup and load a new Howl.
-    if (data.howl) {
-      sound = data.howl;
-    } else {
-      sound = data.howl = new Howl({
-        src: [data.file], //src: ['./Savannah/' + data.file], //+ '.webm'], './Savannah/' + data.file + '.mp3'],
-        html5: true, // Force to HTML5 so that the audio can stream in (best for large files).
-        onplay: function() {
-          // Display the duration.
-          duration.innerHTML = self.formatTime(Math.round(sound.duration()));
-
-          // Start updating the progress of the track.
-          requestAnimationFrame(self.step.bind(self));
-
-          // Start the wave animation if we have already loaded
-          wave.container.style.display = 'block';
-          bar.style.display = 'none';
-          pauseBtn.style.display = 'block';
-        },
-        onload: function() {
-          // Start the wave animation.
-          wave.container.style.display = 'block';
-          bar.style.display = 'none';
-          loading.style.display = 'none';
-        },
-        onend: function() {
-          // Stop the wave animation.
-          wave.container.style.display = 'none';
-          bar.style.display = 'block';
-          
-          // While there is only one song, can simply replay same song instead of skipping.
-          //self.play(trackIdx);
-          self.playlist[trackIdx].howl.play();
-
-          //TODO
-          //self.skip("next");
-
-          // Shows play button when song ends.
-          //playBtn.style.display = 'block';
-          //pauseBtn.style.display = 'none';
-          
-        },
-        onpause: function() {
-          // Stop the wave animation.
-          wave.container.style.display = 'none';
-          bar.style.display = 'block';
-        },
-        onstop: function() {
-          // Stop the wave animation.
-          wave.container.style.display = 'none';
-          bar.style.display = 'block';
-        },
-        onseek: function() {
-          // Start updating the progress of the track.
-          requestAnimationFrame(self.step.bind(self));
-        }
-      });
-    }
-
-    // Begin playing the sound.
-    //sound.play();
-
-    // Update the track display.
-    //track.innerHTML = (index + 1) + '. ' + data.title;
-
-    // Show the pause button.
-    if (sound.state() === 'loaded') {
-      playBtn.style.display = 'none';
-      pauseBtn.style.display = 'block';
-    } else {
-      loading.style.display = 'block';
-      playBtn.style.display = 'none';
-      pauseBtn.style.display = 'none';
-    }
-
-    // Keep track of the index we are currently playing.
-    self.index = index;
-  },
-
-  pauser: function(index) {
-    /*var self = this;
-    // Get the Howl we want to manipulate.
-    var sound = self.playlist[index].howl;
-
-    // Pause the sound.
-    sound.pause();
-
-    var self = this;
-
-    self.playlist[index].pauseIt();
-
-  },*/
-
-  /**
-   * Pause the currently playing track.
-   */
-  pause: function() {
-    /*var self = this;
-
-    // Get the Howl we want to manipulate.
-    var sound = self.playlist[self.index].howl;
-
-    // Pause the sound.
-    sound.pause();*/
+  //TODO placmeent of comment
 
 
-    var self = this;
-
-    self.playlist[self.index].pauseIt();
-
-    // Show the play button.
-    playBtn.style.display = 'block';
-    pauseBtn.style.display = 'none';
-  },
+  
 
   /**
    * Skip to the next or previous track.
@@ -311,15 +158,14 @@ Player.prototype = {
   skipTo: function(index) {
     var self = this;
 
-    self.playlistLBP[self.index].stop();
     // Stop the current track.
-   
-
+    self.playlistLBP[self.index].stop();
+    
     // Reset progress.
     progress.style.width = '0%';
 
-    //barFull.style.width = self.volumePercents[index];
-    //sliderBtn.style.left = self.volumeSliderButtonLocs[index];
+    barFull.style.width = self.volumePercents[index];
+    sliderBtn.style.left = self.volumeSliderButtonLocs[index];
 
     // Play the new track.
     self.index = index;
@@ -337,7 +183,9 @@ Player.prototype = {
   },
 
 
-  volumeTrack: function(val) {
+
+  // TODO song global volume?
+  /*volumeTrack: function(val) {
     var self = this;
 
     self.playlistLBP[self.index].volumeTrack(val);
@@ -346,41 +194,19 @@ Player.prototype = {
     barFull.style.width = (barWidth * 100) + '%';
     sliderBtn.style.left = (window.innerWidth * barWidth + window.innerWidth * 0.05 - 25) + 'px';
 
-  },
+  },*/
 
 
+  // tODO comment put somewhere
   /**
    * Set the volume and update the volume slider display.
    * @param  {Number} val Volume between 0 and 1.
    */
-  /*volume: function(val) {
-    var self = this;
-
-    // Update the global volume (affecting all Howls).
-    Howler.volume(val);
-
-    // Update the display on the slider.
-    var barWidth = (val * 90) / 100;
-    barFull.style.width = (barWidth * 100) + '%';
-    sliderBtn.style.left = (window.innerWidth * barWidth + window.innerWidth * 0.05 - 25) + 'px';
-  
-  
-  },*/
+ 
 
   seeker: function(per) {
     var self = this;
-
     self.playlistLBP[self.index].seeker(per);
-
-    /*for (var i = 0; i < self.playlist.length; i++) {
-      // Get the Howl we want to manipulate.
-      var sound = self.playlist[i].howl;
-
-      // Convert the percent into a seek position.
-      if (sound.playing()) {
-        sound.seek(sound.duration() * per);
-      }
-    }*/
   },
 
 
@@ -399,26 +225,6 @@ Player.prototype = {
       sound.seek(sound.duration() * per);
     }
   },
-
-  /**
-   * The step called within requestAnimationFrame to update the playback position.
-   */
-  /*step: function() {
-    var self = this;
-
-    // Get the Howl we want to manipulate.
-    var sound = self.playlist[self.index].howl;
-
-    // Determine our current seek position.
-    var seek = sound.seek() || 0;
-    timer.innerHTML = self.formatTime(Math.round(seek));
-    progress.style.width = (((seek / sound.duration()) * 100) || 0) + '%';
-
-    // If the sound is still playing, continue stepping.
-    if (sound.playing()) {
-      requestAnimationFrame(self.step.bind(self));
-    }
-  },*/
 
   /**
    * Toggle the playlist display on/off.
@@ -464,19 +270,8 @@ Player.prototype = {
       window["volume" + i].className  = (displays[i] === 'block') ? 'volumey fadein' : 'volumey fadeout';
     }
 
-  },
-
-  /**
-   * Format the time from seconds to M:SS.
-   * @param  {Number} secs Seconds to format.
-   * @return {String}      Formatted time.
-   */
-  formatTime: function(secs) {
-    var minutes = Math.floor(secs / 60) || 0;
-    var seconds = (secs - minutes * 60) || 0;
-
-    return minutes + ':' + (seconds < 10 ? '0' : '') + seconds;
   }
+
 };
 
 class InteractiveSong {
@@ -505,7 +300,6 @@ class InteractiveSong {
     var self = this;
     var sound;
 
-    //index = typeof index === 'number' ? index : self.index;
     var data = self.tracks[index];
 
     let trackIdx = index;
@@ -592,14 +386,13 @@ class InteractiveSong {
 
     var self = this;
 
-    //Or simply:
     self.tracks.forEach(function(song) {
       song.howl.pause();
     });
 
     // Show the play button.
-    playBtn.style.display = 'block';
-    pauseBtn.style.display = 'none';
+    //playBtn.style.display = 'block';
+    //pauseBtn.style.display = 'none';
 
   }
 
@@ -618,34 +411,8 @@ class InteractiveSong {
 
     sound.volume(val);
 
-    //var barWidth = (val * 90) / 100;
-    //barFulls[index].style.width = (barWidth * 100) + '%';
-    //sliderBtns[index].style.left = (window.innerWidth * barWidth + window.innerWidth * 0.05 - 25) + 'px';
-
   }
 
-
-  volumeTrackAtIndex(val, index) {
-    var self = this;
-  
-  }
-
-
-
-
-  volumeTrack(val) {
-    var self = this;
-
-    self.tracks.forEach(function(song){
-      song.volume(val);
-    });
-
-    
-    //var barWidth = (val * 90) / 100;
-    //barFull.style.width = (barWidth * 100) + '%';
-    //sliderBtn.style.left = (window.innerWidth * barWidth + window.innerWidth * 0.05 - 25) + 'px';
-
-  }
 
   seeker(per) {
     var self = this;
@@ -699,6 +466,40 @@ class InteractiveSong {
 
 }
 
+var gardens = new InteractiveSong([
+  {
+    title: 'Ambient FX',
+    file: 'https://static.wikia.nocookie.net/littlebigplanet/images/4/40/Gardens_Ambient_FX.MP3',
+    howl: null
+  },
+  {
+    title: 'Bass',
+    file: 'https://static.wikia.nocookie.net/littlebigplanet/images/c/cc/Gardens_Bass.MP3',
+    howl: null
+  },
+  {
+    title: 'Drums',
+    file: 'https://static.wikia.nocookie.net/littlebigplanet/images/2/20/Gardens_Drums.MP3',
+    howl: null
+  },
+  {
+    title: 'Accompaniment A',
+    file: 'https://static.wikia.nocookie.net/littlebigplanet/images/b/b9/Gardens_Accompaniment_A.MP3', 
+    howl: null
+  },
+  {
+    title: 'Accompaniment B',
+    file: 'https://static.wikia.nocookie.net/littlebigplanet/images/f/f9/Gardens_Melody.MP3', 
+    howl: null
+  },
+  {
+    title: 'Melody',
+    file: 'https://static.wikia.nocookie.net/littlebigplanet/images/0/03/Gardens_Accompaniment_B.MP3', 
+    howl: null
+  }
+
+  ], "Savannah");
+
 var savannah = new InteractiveSong([
   {
     title: 'Percussion', //'Rave Digger',
@@ -711,17 +512,17 @@ var savannah = new InteractiveSong([
     howl: null
   },
   {
-    title: 'Accompinament A', //'Running Out',
+    title: 'Accompaniment A', //'Running Out',
     file: 'https://static.wikia.nocookie.net/littlebigplanet/images/3/30/Savannah_3._Accompaniment_A.mp3', //'running_out',
     howl: null
   },
   {
-    title: 'Accompinament B',
+    title: 'Accompaniment B',
     file: 'https://static.wikia.nocookie.net/littlebigplanet/images/7/70/Savannah_4._Accompinament_B.mp3', 
     howl: null
   },
   {
-    title: 'Accompinament C',
+    title: 'Accompaniment C',
     file: 'https://static.wikia.nocookie.net/littlebigplanet/images/b/b8/Savannah_5._Accompinament_C.mp3', 
     howl: null
   },
@@ -750,17 +551,17 @@ var player = new Player([ // List og songs
       howl: null
     },
     {
-      title: 'Accompinament A', //'Running Out',
+      title: 'Accompaniment A', //'Running Out',
       file: 'https://static.wikia.nocookie.net/littlebigplanet/images/3/30/Savannah_3._Accompaniment_A.mp3', //'running_out',
       howl: null
     },
     {
-      title: 'Accompinament B',
+      title: 'Accompaniment B',
       file: 'https://static.wikia.nocookie.net/littlebigplanet/images/7/70/Savannah_4._Accompinament_B.mp3', 
       howl: null
     },
     {
-      title: 'Accompinament C',
+      title: 'Accompaniment C',
       file: 'https://static.wikia.nocookie.net/littlebigplanet/images/b/b8/Savannah_5._Accompinament_C.mp3', 
       howl: null
     },
@@ -776,7 +577,7 @@ var player = new Player([ // List og songs
     [], // tracks of another song 
     "The Gardens"
   ]
-], [savannah]
+], [gardens, savannah]
 );
 
 // Bind our player controls.
