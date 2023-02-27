@@ -27,10 +27,12 @@
       padding: 0;
       margin: 0;
       overflow: hidden;
-      background: #bb71f3;
-      background: -moz-linear-gradient(-45deg, #bb71f3 0%, #3d4d91 100%);
-      background: -webkit-linear-gradient(-45deg, #bb71f3 0%, #3d4d91 100%);
-      background: linear-gradient(0, #d9a424 0%, #d77f25 100%);
+      background: #2b8d4f;
+      background: -moz-linear-gradient(-45deg, #2b8d4f 0%, #0a7339 100%);
+      background: -webkit-linear-gradient(-45deg, #2b8d4f 0%, #0a7339 100%);
+      background: linear-gradient(0, #2b8d4f 0%, #0a7339 100%);
+
+
       filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#bb71f3', endColorstr='#3d4d91', GradientType=1);
       font-family: "Helvetica Neue", "Futura", "Trebuchet MS", Arial;
       -webkit-user-select: none;

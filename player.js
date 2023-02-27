@@ -614,7 +614,9 @@ var wedding = new InteractiveSong([
     howl: null
   }
 
-  ], "The Wedding", "https://static.wikia.nocookie.net/littlebigplanet/images/1/13/Interactive_Mexican_Graveyard.png", "", "#d9a424", "#d77f25");
+  ], "The Wedding", "https://static.wikia.nocookie.net/littlebigplanet/images/1/13/Interactive_Mexican_Graveyard.png", "", "rgb(145, 146, 182)", "rgb(124, 133, 184)");
+
+
 
 var canyons = new InteractiveSong([
   {
@@ -648,7 +650,7 @@ var canyons = new InteractiveSong([
     howl: null
   }
 
-  ], "The Canyons", "https://static.wikia.nocookie.net/littlebigplanet/images/e/e7/Interactive_Mexican_Desert.png", "", "#d9a424", "#d77f25");
+  ], "The Canyons", "https://static.wikia.nocookie.net/littlebigplanet/images/e/e7/Interactive_Mexican_Desert.png", "", "rgb(179, 171, 255)", "rgb(230, 230, 28)");
 
 
 var metropolis = new InteractiveSong([
@@ -683,7 +685,7 @@ var metropolis = new InteractiveSong([
     howl: null
   }
 
-  ], "The Metropolis", "https://static.wikia.nocookie.net/littlebigplanet/images/3/39/Interactive_USA_City.png", "", "#d9a424", "#d77f25");
+  ], "The Metropolis", "https://static.wikia.nocookie.net/littlebigplanet/images/3/39/Interactive_USA_City.png", "", "rgb(0, 0, 0)", "rgb(100, 98, 123)");
 
 
 var islands = new InteractiveSong([
@@ -718,7 +720,7 @@ var islands = new InteractiveSong([
     howl: null
   }
 
-  ], "The Islands", "https://static.wikia.nocookie.net/littlebigplanet/images/8/8d/Interactive_Japanese_Zen.png", "", "#d9a424", "#d77f25");
+  ], "The Islands", "https://static.wikia.nocookie.net/littlebigplanet/images/8/8d/Interactive_Japanese_Zen.png", "", "rgb(0, 107, 68)", "rgb(163, 221, 235)");
 
 
   var temples = new InteractiveSong([
@@ -753,7 +755,7 @@ var islands = new InteractiveSong([
       howl: null
     }
   
-    ], "The Temples", "https://static.wikia.nocookie.net/littlebigplanet/images/b/b4/Interactive_Indian_Jungle.png", "", "#d9a424", "#d77f25");
+    ], "The Temples", "https://static.wikia.nocookie.net/littlebigplanet/images/b/b4/Interactive_Indian_Jungle.png", "", "rgb(151, 158, 127)", "rgb(32, 83, 71)");
 
   
 
@@ -789,7 +791,9 @@ var islands = new InteractiveSong([
       howl: null
     }
   
-    ], "The Wilderness", "https://static.wikia.nocookie.net/littlebigplanet/images/9/9d/Interactive_Siberian_Tundra.png", "", "#d9a424", "#d77f25");
+    ], "The Wilderness", "https://static.wikia.nocookie.net/littlebigplanet/images/9/9d/Interactive_Siberian_Tundra.png", "", "rgb(255, 255, 255)", "rgb(140, 147, 190)");
+
+
 
 
 // Setup our new audio player class and pass it the playlist.
