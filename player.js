@@ -77,8 +77,6 @@ var Player = function(playlistLBP) {
     };
     list.appendChild(div);
 
-    song.attach(self);
-
   });
 
 
@@ -98,10 +96,14 @@ Player.prototype = {
 
     self.playlistLBP[self.index].loadAll();
 
+    self.playlistLBP[self.index].attach(self);
+
     for (let index = 0; index < 6; index++) {
 
-      barFulls[index].style.width = 90 + '%';
-      sliderBtns[index].style.left = (window.innerWidth * 0.9 + window.innerWidth * 0.05 - 25) + 'px';
+      barFulls[index].style.width = 100 + '%';
+      sliderBtns[index].style.left = (window.innerWidth * 1.0 + window.innerWidth * 0.05 - 25) + 'px';
+
+      this.volumeTrackAtIndex(1.0, index);
 
     } 
 
