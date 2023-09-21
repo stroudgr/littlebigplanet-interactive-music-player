@@ -2,15 +2,19 @@
  
 An online music player for the interactive music tracks from LittleBigPlanet.
 
-<!-- # Disclaimers
+Demo: [https://stroudgr.github.io/littlebigplanet-interactive-music-player/](https://stroudgr.github.io/littlebigplanet-interactive-music-player/)
+
+# Disclaimers
 
 Sony Group Corporation (collectively referred to as “Sony”) is not affiliated with this product. 
 
 By using this product, you agree to release Sony from any liability or loss caused to you or others by this product. 
 
---> 
+
 
 # Third Party Licenses
+
+## [howler.js](https://github.com/goldfire/howler.js)
 
 Copyright (c) 2013-2020 James Simpson and GoldFire Studios, Inc.
 
